@@ -79,6 +79,45 @@ const routes = {
 				res.end(JSON.stringify(list));
 			});
 		});
+	},
+
+	'/remove-movie': (url, res) => {
+		if (!url.query.query) {
+			res.writeHead(400);
+			res.end();
+			return;
+		}
+
+		if (url.query.access_code !== process.env.ACCESS_CODE) {
+			res.writeHead(403);
+			res.end();
+			return;
+		}
+
+		if (!user.access_token) {
+			res.writeHead(401);
+			res.end();
+			return;
+		}
+
+		trakt.searchMovie(encodeURIComponent(url.query.query), (err, movies) => {
+			if (err || movies == null || movies.length == 0) {
+				res.writeHead(204);
+				res.end();
+				return;
+			}
+
+			const body = {
+				movies: [
+					movies[0].movie
+				]
+			};
+
+			trakt.removeMovieToWatchList(user.access_token, body, (err, list) => {
+				res.writeHead(200, {'content-type': 'application/json'});
+				res.end(JSON.stringify(list));
+			});
+		});
 	}
 };
 

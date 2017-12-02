@@ -104,6 +104,21 @@ class Trakt {
 			},
 		}, callback);
 	}
+
+	removeMovieFromWatchList(access_token, data, callback) {
+		this.makeRequest({
+			method: 'POST',
+			hostname: 'api.trakt.tv',
+			path: `/sync/watchlist/remove`,
+			data: data,
+			headers: {
+				'content-type': 'application/json',
+				'trakt-api-version': '2',
+				'trakt-api-key': this.client_id,
+				'authorization': `Bearer ${access_token}`
+			},
+		}, callback);
+	}
 }
 
 module.exports = Trakt;
