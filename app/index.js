@@ -2,12 +2,21 @@
 
 const Http = require('http'),
 	  Url = require('url'),
+	  Fs = require('fs'),
+	  Path = require('path'),
 	  Trakt = require('./trakt');
 
 const log = require('./logger');
+const user_path = Path.resolve(__dirname, 'state/user.json');
 const trakt = new Trakt(process.env.TRAKT_CLIENT_ID, process.env.TRAKT_CLIENT_SECRET, process.env.TRAKT_REDIRECT_URI);
 
 let user;
+
+try {
+	user = require(user_path);
+} catch (e) {
+	log.warn(`${user_path} not found.`);
+}
 
 const routes = {
 	'/heartbeat': (url, res) => {
@@ -30,6 +39,8 @@ const routes = {
 			trakt.getUserSettings(auth.access_token, (err, settings) => {
 				if (settings.user && settings.user.username === process.env.TRAKT_USERNAME) {
 					user = auth;
+
+					Fs.writeFileSync(user_path, JSON.stringify(user));
 
 					res.writeHead(200, {'content-type': 'application/json'});
 					res.end(JSON.stringify(settings));
