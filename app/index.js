@@ -124,7 +124,7 @@ const routes = {
 				]
 			};
 
-			trakt.removeMovieToWatchList(user.access_token, body, (err, list) => {
+			trakt.removeMovieFromWatchList(user.access_token, body, (err, list) => {
 				res.writeHead(200, {'content-type': 'application/json'});
 				res.end(JSON.stringify(list));
 			});
