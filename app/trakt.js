@@ -11,11 +11,11 @@ class Trakt {
 	}
 
 	makeRequest(options, callback) {
-        const data = options.data || '';
+	const data = options.data || '';
 
-        options = options.url || options;        
+	options = options.url || options;        
 
-        log.debug('Options:', JSON.stringify(options));
+	log.debug('Options:', JSON.stringify(options));
 
 		const req = Https.request(options, (res) => {
 			let body = '';
@@ -71,8 +71,8 @@ class Trakt {
 			'headers': {
 				'content-type': 'application/json',
 				'trakt-api-version': '2',
-                'trakt-api-key': this.client_id,
-                'authorization': `Bearer ${access_token}`
+		'trakt-api-key': this.client_id,
+		'authorization': `Bearer ${access_token}`
 			}
 		}, callback);
 	}
@@ -88,19 +88,19 @@ class Trakt {
 				'trakt-api-key': this.client_id
 			}
 		}, callback);
-    }
+    	}
 
-    addMovieToWatchList(access_token, data, callback) {
+    	addMovieToWatchList(access_token, data, callback) {
 		this.makeRequest({
 			method: 'POST',
 			hostname: 'api.trakt.tv',
-            path: `/sync/watchlist`,
-            data: data,
+	    		path: `/sync/watchlist`,
+	    		data: data,
 			headers: {
 				'content-type': 'application/json',
 				'trakt-api-version': '2',
-                'trakt-api-key': this.client_id,
-                'authorization': `Bearer ${access_token}`
+				'trakt-api-key': this.client_id,
+				'authorization': `Bearer ${access_token}`
 			},
 		}, callback);
 	}
