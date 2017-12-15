@@ -18,6 +18,7 @@ try {
 	log.warn(`${user_path} not found.`);
 }
 
+// TODO: Make this a bit more efficient, using shared headers and such
 const routes = {
 	'/heartbeat': (url, res) => {
 		let body = null;
