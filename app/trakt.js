@@ -71,8 +71,8 @@ class Trakt {
 			'headers': {
 				'content-type': 'application/json',
 				'trakt-api-version': '2',
-		'trakt-api-key': this.client_id,
-		'authorization': `Bearer ${access_token}`
+				'trakt-api-key': this.client_id,
+				'authorization': `Bearer ${access_token}`
 			}
 		}, callback);
 	}
